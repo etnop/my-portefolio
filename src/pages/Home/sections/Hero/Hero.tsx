@@ -3,13 +3,40 @@ import Avatar from "../../../../assets/images/avatar.png";
 import { Download, Email } from "@mui/icons-material";
 import StyleButton from "../../../../components/StyleButton/StyleButton";
 import { AnimatedBackground } from "../../../../components/AnimatedBackground/AnimatedBackground";
-
 const Hero = () => {
   const StyledHero = styled("div")(({ theme }) => ({
+    position: "relative",
     backgroundColor: theme.palette.primary.main,
+
     height: "100vh",
+    opacity: 0.8,
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundImage: "url(/src/assets/images/fundo.png)",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      opacity: 1, // Adjust the opacity as needed
+      zIndex: -1,
+    },
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.7)", // Fundo preto com opacidade
+      zIndex: -1,
+    }
   }));
   const StyledImg = styled("img")(({ theme }) => ({
     width: "100%",
@@ -55,7 +82,8 @@ const Hero = () => {
                 container
                 display="flex"
                 justifyContent="center"
-                spacing={2}     pt={3}
+                spacing={2}
+                pt={3}
               >
                 <Grid
                   item
@@ -63,7 +91,6 @@ const Hero = () => {
                   md={4}
                   display="flex"
                   justifyContent="center"
-               
                 >
                   <StyleButton>
                     <Download></Download>
@@ -76,7 +103,6 @@ const Hero = () => {
                   md={4}
                   display="flex"
                   justifyContent="center"
-              
                 >
                   <StyleButton>
                     <Email></Email>
