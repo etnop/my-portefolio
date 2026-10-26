@@ -1,9 +1,9 @@
 import { Box, Container, Grid, Typography, styled } from "@mui/material";
-import Avatar from "../../../../assets/images/avatar.png";
+import Avatar from "../../../../assets/images/avatar.webp";
 import { Download, Email } from "@mui/icons-material";
 import StyleButton from "../../../../components/StyleButton/StyleButton";
 import { AnimatedBackground } from "../../../../components/AnimatedBackground/AnimatedBackground";
-import fundo from "../../../../assets/images/fundo.png";
+import fundo from "../../../../assets/images/fundo.webp";
 import cv from "../../../../assets/Pedro Ponte EN.pdf";
 const Hero = () => {
   const StyledHero = styled("div")(({ theme }) => ({
