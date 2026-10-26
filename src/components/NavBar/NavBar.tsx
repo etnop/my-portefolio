@@ -1,5 +1,4 @@
 import { AppBar, MenuItem, Toolbar, styled } from "@mui/material";
-import { BrowserRouter as Router } from 'react-router-dom';
 import { Link  } from 'react-scroll';
 
 
@@ -11,7 +10,6 @@ const StyledToolbar = styled(Toolbar)(() => ({
 const NavBar = () => {
   return (
     <>
-     <Router>
       <div>
         <AppBar position="absolute">
         <StyledToolbar>
@@ -42,7 +40,6 @@ const NavBar = () => {
 
         {/* <Route path="/projects" component={()} /> */}
       </div>
-    </Router>
 
     </>
   );
