@@ -14,6 +14,14 @@
     // Hostname(s) de produção do frontend, separados por vírgula. Nunca incluir localhost aqui.
     "TURNSTILE_HOSTNAMES": "pedroponte.dev",
     "CONTACT_EMAIL": "pedroponte1989@gmail.com"
+  },
+  // Pré-visualizações por ramo/PR (wrangler preview). Os hostnames *.workers.dev das
+  // pré-visualizações não estão no widget, por isso as rotas /api/* recusam (403) lá.
+  "previews": {
+    "vars": {
+      "TURNSTILE_HOSTNAMES": "pedroponte.dev",
+      "CONTACT_EMAIL": "pedroponte1989@gmail.com"
+    }
   }
   // TURNSTILE_SECRET é um segredo: `wrangler secret put TURNSTILE_SECRET`
   // Para desenvolvimento local, usar .dev.vars (ignorado pelo git).
