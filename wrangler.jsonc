@@ -12,7 +12,7 @@
   "rules": [{ "type": "Data", "globs": ["**/*.pdf"], "fallthrough": false }],
   "vars": {
     // Hostname(s) de produção do frontend, separados por vírgula. Nunca incluir localhost aqui.
-    "TURNSTILE_HOSTNAMES": "",
+    "TURNSTILE_HOSTNAMES": "pedroponte.dev",
     "CONTACT_EMAIL": "pedroponte1989@gmail.com"
   }
   // TURNSTILE_SECRET é um segredo: `wrangler secret put TURNSTILE_SECRET`
