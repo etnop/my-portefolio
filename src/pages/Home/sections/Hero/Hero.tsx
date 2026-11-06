@@ -4,8 +4,21 @@ import { Download, Email } from "@mui/icons-material";
 import StyleButton from "../../../../components/StyleButton/StyleButton";
 import { AnimatedBackground } from "../../../../components/AnimatedBackground/AnimatedBackground";
 import fundo from "../../../../assets/images/fundo.webp";
-import cv from "../../../../assets/Pedro Ponte EN.pdf";
+import TurnstileDialog from "../../../../components/TurnstileDialog/TurnstileDialog";
+import { useState } from "react";
+
+const postToken = (path: string, token: string) =>
+  fetch(path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token }),
+  }).then((r) => {
+    if (!r.ok) throw new Error(`${path} ${r.status}`);
+    return r;
+  });
+
 const Hero = () => {
+  const [pending, setPending] = useState<"cv" | "contact" | null>(null);
   const StyledHero = styled("div")(({ theme }) => ({
     position: "relative",
     backgroundColor: theme.palette.primary.main,
@@ -47,22 +60,22 @@ const Hero = () => {
   }));
 
 
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = cv; // Path to your PDF file
-    link.title='Pedro Ponte';
-    link.target='_blank';
+  const handleDownload = () => setPending("cv");
+  const sendmail = () => setPending("contact");
 
-    // link.download = 'your-file-name.pdf'; // Name of the file to be downloaded
-    link.click();
-  }; 
-  const sendmail = () => {
-    const link = document.createElement('a');
-    link.href = 'mailto:pedroponte1989@gmail.com'; 
-    link.title='Pedro Ponte';
-    link.target='_blank';
-
-    link.click();
+  const onToken = async (token: string) => {
+    if (pending === "cv") {
+      const blob = await (await postToken("/api/cv", token)).blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "Pedro Ponte EN.pdf";
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    } else if (pending === "contact") {
+      const { email } = (await (await postToken("/api/contact", token)).json()) as { email: string };
+      window.location.href = `mailto:${email}`;
+    }
   };
   return (
     <>
@@ -135,6 +148,13 @@ const Hero = () => {
           </Grid>
         </Container>
       </StyledHero>
+      <TurnstileDialog
+        open={pending !== null}
+        action={pending ?? "cv"}
+        title={pending === "contact" ? "Verificação antes do contacto" : "Verificação antes do download"}
+        onClose={() => setPending(null)}
+        onToken={onToken}
+      />
     </>
   );
 };
