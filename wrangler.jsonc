@@ -1,5 +1,28 @@
 {
   "name": "my-portefolio",
   "compatibility_date": "2026-10-01",
-  "assets": { "directory": "./dist" }
+  "main": "worker/index.ts",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // Só as rotas /api/* passam pelo Worker; o resto é servido diretamente como estático.
+    "run_worker_first": ["/api/*"]
+  },
+  // O CV é incluído no Worker (não fica nos ficheiros públicos de /dist).
+  "rules": [{ "type": "Data", "globs": ["**/*.pdf"], "fallthrough": false }],
+  "vars": {
+    // Hostname(s) de produção do frontend, separados por vírgula. Nunca incluir localhost aqui.
+    "TURNSTILE_HOSTNAMES": "pedroponte.dev",
+    "CONTACT_EMAIL": "pedroponte1989@gmail.com"
+  },
+  // Pré-visualizações por ramo/PR (wrangler preview). Os hostnames *.workers.dev das
+  // pré-visualizações não estão no widget, por isso as rotas /api/* recusam (403) lá.
+  "previews": {
+    "vars": {
+      "TURNSTILE_HOSTNAMES": "pedroponte.dev",
+      "CONTACT_EMAIL": "pedroponte1989@gmail.com"
+    }
+  }
+  // TURNSTILE_SECRET é um segredo: `wrangler secret put TURNSTILE_SECRET`
+  // Para desenvolvimento local, usar .dev.vars (ignorado pelo git).
 }
